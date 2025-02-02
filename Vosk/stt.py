@@ -13,7 +13,7 @@ def list_audio_devices():
     p.terminate()  
     return device_count  
 
-def start_voice_to_text():  
+def start_voice_to_text(language='en'):  
     # 设置音频参数  
     FRAME_RATE = 16000  
     CHANNELS = 1  
@@ -39,7 +39,10 @@ def start_voice_to_text():
 
     # 加载模型  
     try:  
-        model = Model("vosk-model-small-cn-0.22")  
+        if language == 'en':  
+            model = Model("vosk-model-en-us-0.42-gigaspeech")  
+        elif language == 'zh':
+            model = Model("vosk-model-small-cn-0.22")  
         recognizer = KaldiRecognizer(model, FRAME_RATE)  
     except Exception as e:  
         print(f"错误：无法加载模型 - {str(e)}")  
@@ -81,4 +84,5 @@ def start_voice_to_text():
         audio.terminate()  
 
 if __name__ == "__main__":  
-    start_voice_to_text()
+    language = 'zh' if len(sys.argv) > 1 and sys.argv[1].lower() == 'zh' else 'en'
+    start_voice_to_text(language)
