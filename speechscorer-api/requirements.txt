@@ -1,0 +1,7 @@
+openai-whisper
+torch
+transformers
+librosa
+jiwer
+dtaidistance
+edge-tts
